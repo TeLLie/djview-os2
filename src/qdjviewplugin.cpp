@@ -52,6 +52,12 @@
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>
+#ifdef Q_OS_OS2
+# include <unistd.h>
+# include <fcntl.h>
+# include <io.h>
+# include <fcntl.h>
+#endif
 #ifdef Q_OS_UNIX
 # include <unistd.h>
 # include <fcntl.h>
