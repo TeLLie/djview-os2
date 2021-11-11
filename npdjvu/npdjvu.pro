@@ -83,6 +83,9 @@ x11 {
 
 CONFIG += qt thread warn_on 
 QT += network opengl
+os2 {
+QT -= opengl
+}
 
 # -- find libraries
 CONFIG(autoconf) {

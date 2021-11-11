@@ -25,6 +25,9 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets printsupport
 } 
 
+os2 {
+QT -= opengl
+}
 
 # -- find libraries
 CONFIG(autoconf) {
