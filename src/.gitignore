@@ -1,0 +1,13 @@
+/*.moc
+/*.o
+/*.pdb
+/*.qm
+/*.vcxproj*
+/Makefile.qmake
+/debug/
+/djview
+/moc_*.cpp
+/qm.dir/
+/qrc_*.cpp
+/release/
+/ui_*.h

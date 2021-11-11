@@ -1,0 +1,93 @@
+<html>
+<title>Test of nsdejavu scriptability features</title>
+<body onload="detectPlugin()">
+
+
+<p><hr><p>
+<!-- The plugin -->
+  <style type="text/css"> 
+    #myplugin {  width:  100%; height: 330px;  } 
+  </style>
+  <object id="myplugin" data="test.djvu" type="image/vnd.djvu">
+    No plugin
+  </object> 
+<p><hr><p>
+<!-- The information section -->
+  <div id="info" onclick="detectPlugin()">
+    Plugin has not yet been detected.
+  </div>
+<p><hr><p>
+<!-- The buttons -->
+  <button onclick="setDjVuOption('pageno','1')">FirstPage</button>&nbsp;
+  <button onclick="setDjVuOption('page','-1')">PrevPage</button>&nbsp;
+  <button onclick="setDjVuOption('page','+1')">NextPage</button>&nbsp;
+  <button onclick="setDjVuOption('pageno',getDjVuOption('pages'))">LastPage</button>&nbsp;
+<p><hr><p>
+  <table border=0 cellspacing=4>
+    <tr>
+      <td>Key:&nbsp;</td>
+      <td><input type="text" name="key" id="key"
+                 onchange="getButtonPressed()" value="page"></td>
+      <td><button onclick="getButtonPressed()">Get</button></td>
+    </tr>
+    <tr>
+      <td>Value:&nbsp;</td>
+      <td><input type="text" name="value" id="val"
+                 onchange="setButtonPressed()"></td>
+      <td><button onclick="setButtonPressed()">Set</button></td>
+    </tr>
+  </table>
+<p><hr><p>
+
+<!-- Javascript code -->
+  <script>
+
+    var myplugin = document.getElementById("myplugin"); 
+    var info = document.getElementById("info"); 
+    var fkey = document.getElementById("key"); 
+    var fval = document.getElementById("val");
+
+    function detectPlugin() {
+      if (myplugin && myplugin.version && ! myplugin.onchange) { 
+        myplugin.onchange = "showInfo()";
+        showInfo();
+      }
+    }
+
+    function getDjVuOption(key) {
+      detectPlugin();
+      return myplugin.getdjvuopt(key);
+    }
+
+    function setDjVuOption(key,val) {
+      detectPlugin();
+      myplugin.setdjvuopt(key,val);
+    }
+
+    function showInfo() {
+      info.innerHTML = 
+      "page=" + myplugin.getdjvuopt('page') +
+            " (" + myplugin.getdjvuopt('pageno') + "/" + 
+                   myplugin.getdjvuopt('pages') + "), " +
+            "zoom=" + myplugin.getdjvuopt('zoom') + ", " +
+            "rotate=" + myplugin.getdjvuopt('rotate') + ",<br>" +
+            "version=" + myplugin.version + ", " +
+            "onchange=" + myplugin.onchange + ",<br>" +  
+            "showposition=" + myplugin.getdjvuopt('showposition') + ".";
+       getButtonPressed();
+    }
+
+    function getButtonPressed() {
+      fval.value = getDjVuOption(fkey.value);
+    }
+
+    function setButtonPressed() {
+      setDjVuOption(fkey.value,fval.value);
+      getButtonPressed();
+    }
+
+  </script>
+
+<!-- Form -->
+</body>
+</html>
